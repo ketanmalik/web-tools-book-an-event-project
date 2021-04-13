@@ -21,4 +21,5 @@
 
     <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
 
+    <bean name="userDao" class="com.mycompany.dao.UserDao" />
 </beans>
