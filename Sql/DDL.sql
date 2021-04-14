@@ -13,9 +13,18 @@ create table user (
     CONSTRAINT user_type CHECK (user_type in ('admin', 'customer'))
 );
 
-insert into user (fName, lName, email, password, city, state, country, user_type) 
-values ('Admin', 'User', 'admin@bookanevent.com', 'admin', 'N/A', 'N/A', 'N/A', 'admin');
+create table event (
+	event_id int NOT NULL AUTO_INCREMENT,
+    event_name varchar(100) NOT NULL,
+    event_type varchar(100) NOT NULL,
+    event_cast varchar(1000) NOT NULL,
+    event_rating varchar(10) NOT NULL,
+    event_genre varchar(100) NOT NULL,
+    event_language varchar(100) NOT NULL,
+    event_summary varchar(2000) NOT NULL,
+    event_duration int NOT NULL,
+    event_date DATE NOT NULL,
+    PRIMARY KEY (event_id)
+);
+commit;
 
-delete from user where user_id in (8);
-select * from user;
-DELETE FROM USER WHERE USER_ID=3;
