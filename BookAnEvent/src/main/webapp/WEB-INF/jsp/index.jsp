@@ -18,6 +18,9 @@
             <a class="btn btn-outline-warning my-2 my-sm-0" href="/BookAnEvent/sign-up.htm">Sign Up</a>
         </div>
     </nav>
+    <div class="container">
+        Logged In User: ${sessionScope.user.fName}
+    </div>
     <script src="webjars/jquery/3.6.0/dist/jquery.min.js"></script>
     <script src="webjars/bootstrap/4.6.0-1/js/bootstrap.min.js"></script>
 </body>

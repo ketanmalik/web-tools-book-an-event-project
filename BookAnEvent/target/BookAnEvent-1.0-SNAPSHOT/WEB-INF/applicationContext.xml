@@ -21,5 +21,6 @@
 
     <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
 
+    <bean name="eventDao" class="com.mycompany.dao.EventDao" />
     <bean name="userDao" class="com.mycompany.dao.UserDao" />
 </beans>

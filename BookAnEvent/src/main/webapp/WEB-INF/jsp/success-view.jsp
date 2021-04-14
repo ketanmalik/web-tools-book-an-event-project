@@ -4,6 +4,7 @@
     Author     : ketanmalik
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,10 +23,20 @@
             <hr class="my-4">
             <p>${requestScope.successMsg2}</p>
             <p class="lead">
-                <a class="btn btn-primary btn-lg" href="index.htm" role="button">Go to home page</a>
-            </p>
-        </div>
-        <script src="webjars/jquery/3.6.0/dist/jquery.min.js"></script>
-        <script src="webjars/bootstrap/4.6.0-1/js/bootstrap.min.js"></script>
-    </body>
+            <c:choose>
+                <c:when test="${sessionScope.user != null && sessionScope.user.user_type == 'admin'}">
+                    <a class="btn btn-primary btn-lg" href="log-in-success.htm" role="button">Go to Admin</a>
+                </c:when>
+                <c:when test="${sessionScope.user != null && sessionScope.user.user_type == 'customer'}">
+                    <a class="btn btn-primary btn-lg" href="index.htm" role="button">Go to Customer</a>
+                </c:when>
+                <c:otherwise>
+                    <a class="btn btn-primary btn-lg" href="index.htm" role="button">Go to Home Page</a>
+                </c:otherwise>
+            </c:choose>
+        </p>
+    </div>
+    <script src="webjars/jquery/3.6.0/dist/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.6.0-1/js/bootstrap.min.js"></script>
+</body>
 </html>

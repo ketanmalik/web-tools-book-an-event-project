@@ -17,8 +17,8 @@ import org.hibernate.query.Query;
 public class UserDao extends DAO {
 
     public int addUser(String fName, String lName, String email, String password, String city, String state, String country, String user_type) {
-        int userAlreadyExists = checkUser(email, user_type);
-        if (userAlreadyExists == 0) {
+        List<User> userAlreadyExists = checkUser(email, "", "sign-up");
+        if (userAlreadyExists.isEmpty()) {
             User user = new User();
             user.setfName(fName);
             user.setlName(lName);
@@ -37,14 +37,21 @@ public class UserDao extends DAO {
         }
     }
 
-    public int checkUser(String email, String user_type) {
+    public List<User> checkUser(String email, String password, String mode) {
         beginTransaction();
-        String hql = "FROM User where email=:email and user_type=:user_type";
+        String hql = "";
+        if (mode.equalsIgnoreCase("sign-up")) {
+            hql = "FROM User where email=:email";
+        } else {
+            hql = "FROM User where email=:email and password =:password";
+        }
         Query query = getSession().createQuery(hql);
         query.setParameter("email", email);
-        query.setParameter("user_type", user_type);
+        if (mode.equalsIgnoreCase("log-in")) {
+            query.setParameter("password", password);
+        }
         List result = query.list();
         commit();
-        return result.size();
+        return result;
     }
 }

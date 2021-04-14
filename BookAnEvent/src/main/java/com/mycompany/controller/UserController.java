@@ -5,15 +5,19 @@
  */
 package com.mycompany.controller;
 
+import com.mycompany.dao.EventDao;
 import com.mycompany.dao.UserDao;
+import com.mycompany.pojo.Event;
+import com.mycompany.pojo.User;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpStatus;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -47,12 +51,56 @@ public class UserController {
             return new ModelAndView("error-view");
         }
         if (res == 1) {
-            request.setAttribute("successMsg1", "You have signed up successfully");
-            request.setAttribute("successMsg2", "Please log in from home page to enjoy our services");
+            request.setAttribute("successMsg1", "You have signed up successfully.");
+            request.setAttribute("successMsg2", "Please log in from home page to enjoy our services.");
             return new ModelAndView("success-view");
         }
-        request.setAttribute("errorMsg1", "You could not be signed up");
+        request.setAttribute("errorMsg1", "You could not be signed up.");
         request.setAttribute("errorMsg2", "There was a problem in reaching out to our servers. Please try again later.");
-        return new ModelAndView("error-view", "errorMsg", "There was some problem while signing up. Please try again later.");
+        return new ModelAndView("error-view");
+    }
+
+    @PostMapping("/log-in-success.htm")
+    public ModelAndView logInUser(HttpServletRequest request, HttpServletResponse response, UserDao userDao, HttpSession session, EventDao eventDao) {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        if (email.trim().equals("") || password.trim().equals("")) {
+            request.setAttribute("errorMsg1", "You could not be logged in.");
+            request.setAttribute("errorMsg2", "Either email or password is blank. Please enter valid user credentials and try again.");
+            return new ModelAndView("error-view");
+        }
+        List<User> user = userDao.checkUser(email, password, "log-in");
+        if (user.isEmpty()) {
+            request.setAttribute("errorMsg1", "You could not be logged in.");
+            request.setAttribute("errorMsg2", "Either email or password is incorrect. Please enter valid user credentials and try again.");
+            if (session.getAttribute("user") != null) {
+                session.removeAttribute("user");
+            };
+            return new ModelAndView("error-view");
+        } else {
+            List<Event> eventList = eventDao.getEventList();
+            session.setAttribute("user", user.get(0));
+            session.setAttribute("eventList", eventList);
+            if (user.get(0).getUser_type().equals("admin")) {
+                return new ModelAndView("manage-events-view");
+            }
+            return new ModelAndView("index");
+        }
+    }
+
+    @GetMapping("/log-in-success.htm")
+    public ModelAndView redirectUser(HttpSession session) {
+        if (session.getAttribute("user") != null) {
+            return new ModelAndView("manage-events-view");
+        } else {
+            return new ModelAndView("index");
+        }
+    }
+
+    @PostMapping("/sign-out.htm")
+    public ModelAndView signOutUser(HttpSession session) {
+        session.removeAttribute("user");
+        session.removeAttribute("eventList");
+        return new ModelAndView("index");
     }
 }

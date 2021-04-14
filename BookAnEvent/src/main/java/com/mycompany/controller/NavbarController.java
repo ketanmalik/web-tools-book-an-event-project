@@ -20,13 +20,11 @@ public class NavbarController {
 
     @GetMapping("/log-in.htm")
     public ModelAndView logInPage(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(request.getParameter("test"));
         return new ModelAndView("log-in-view");
     }
 
     @GetMapping("/sign-up.htm")
     public ModelAndView signUpPage(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(request.getParameter("test"));
         return new ModelAndView("sign-up-view");
     }
 }

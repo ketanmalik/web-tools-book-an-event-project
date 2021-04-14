@@ -14,33 +14,33 @@ function togglePassword() {
 }
 
 function validateSignUpForm() {
-    var fName = document.getElementsByName("fName");
-    var lName = document.getElementsByName("lName");
-    var email = document.getElementsByName("email");
-    var password = document.getElementsByName("password");
-    var city = document.getElementsByName("city");
-    var state = document.getElementsByName("state");
-    if(!fName || !fName[0] || fName[0].value.trim() === '') {
+    var fName = document.getElementsByName("fName")[0].value;
+    var lName = document.getElementsByName("lName")[0].value;
+    var email = document.getElementsByName("email")[0].value;
+    var password = document.getElementsByName("password")[0].value;
+    var city = document.getElementsByName("city")[0].value;
+    var state = document.getElementsByName("state")[0].value;
+    if(!fName || fName.trim() === '') {
         alert("Please enter a valid first name");
         return false;
     }
-    if(!lName || !lName[0] || lName[0].value.trim() === '') {
+    if(!lName || lName.trim() === '') {
         alert("Please enter a valid last name");
         return false;
     }
-    if(!email || !email[0] || email[0].value.trim() === '' || !email[0].value.trim().match(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9]+.[a-zA-Z]+$/g)) {
+    if(!email || email.trim() === '' || !email.trim().match(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9]+.[a-zA-Z]+$/g)) {
         alert("Please enter a valid email");
         return false;
     }
-    if(!password || !password[0] || password[0].value.trim() === '' || password[0].value.length > 15) {
+    if(!password || password.trim() === '' || password.length > 15) {
         alert("Please enter a valid password");
         return false;
     }
-    if(!city || !city[0] || city[0].value.trim() === '') {
+    if(!city || city.trim() === '') {
         alert("Please enter a valid city");
         return false;
     }
-    if(!state || !state[0] || state[0].value.trim() === '') {
+    if(!state || state.trim() === '') {
         alert("Please select a valid state");
         return false;
     }

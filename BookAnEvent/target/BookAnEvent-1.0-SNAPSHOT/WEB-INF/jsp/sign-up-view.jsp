@@ -19,7 +19,7 @@
             <a class="navbar-brand">BookAnEvent</a>
         </nav>
         <div class="container">
-            <h3 class="sign-up-heading">Sign Up Form</h3>
+            <h3 class="form-heading">Sign Up Form</h3>
             <form action="sign-up-success.htm" method="post" onsubmit="return validateSignUpForm()">
                 <div class="form-group row">
                     <label for="fName" class="col-sm-2 col-form-label">First Name</label>

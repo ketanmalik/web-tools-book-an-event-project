@@ -16,6 +16,7 @@ and open the template in the editor.
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping resource="User.hbm.xml"/>
+        <mapping resource="Event.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
 
