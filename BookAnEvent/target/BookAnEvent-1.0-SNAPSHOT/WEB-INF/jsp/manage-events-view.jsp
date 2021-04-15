@@ -76,7 +76,6 @@
                                                     <input type="hidden" name="delete-event" value="${event.event_id}" />
                                                 </form>
                                                 &emsp;
-                                                &emsp;
                                                 <form action="update-event.htm" method="post">
                                                     <input type="submit" class="btn btn-outline-primary" value="Update" />
                                                     <input type="hidden" name="update-event" value="${event.event_id}" />

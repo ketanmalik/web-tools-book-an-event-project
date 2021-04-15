@@ -21,6 +21,8 @@
 
     <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
 
+    <bean name="event" class="com.mycompany.pojo.Event" />
     <bean name="eventDao" class="com.mycompany.dao.EventDao" />
     <bean name="userDao" class="com.mycompany.dao.UserDao" />
+    <bean name="updateEventValidator" class="com.mycompany.validator.UpdateEventValidator" />
 </beans>

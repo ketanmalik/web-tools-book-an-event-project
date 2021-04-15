@@ -7,13 +7,22 @@ package com.mycompany.controller;
 
 import com.mycompany.dao.EventDao;
 import com.mycompany.pojo.Event;
+import com.mycompany.utils.Util;
+import com.mycompany.validator.UpdateEventValidator;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +33,15 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class AdminController {
+
+    @Autowired
+    UpdateEventValidator updateEventValidator;
+
+    @InitBinder("event")
+    protected void initBinder(WebDataBinder binder) {
+        Util.registerIntFormat(binder);
+        binder.setValidator(updateEventValidator);
+    }
 
     @PostMapping("/add-event.htm")
     public ModelAndView addEvent(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -39,7 +57,7 @@ public class AdminController {
             return sessionTimedOut(request);
         }
         int res = eventDao.deleteEvent(Integer.parseInt(request.getParameter("delete-event")));
-        if(res > 0) {
+        if (res > 0) {
             List<Event> eventList = eventDao.getEventList();
             session.setAttribute("eventList", eventList);
         }
@@ -73,11 +91,23 @@ public class AdminController {
         int res = eventDao.saveEvent(event_name, event_type, event_cast, event_rating, event_genre,
                 event_language, event_summary, Integer.parseInt(event_duration), formatter.parse(event_date));
         if (res > 0) {
+            List<Event> eventList = eventDao.getEventList();
+            session.setAttribute("eventList", eventList);
             request.setAttribute("successMsg1", "New event added successfully.");
             request.setAttribute("successMsg2", "Please go back to dashboard to manage this newly added event.");
             return new ModelAndView("success-view");
         }
         return serverError(request);
+    }
+
+    @PostMapping("updated-event.htm")
+    public ModelAndView saveUpdatedEvent(@ModelAttribute("updateEventForm") Event event, BindingResult result, Model model) {
+        updateEventValidator.validate(event, result);
+        if (result.hasErrors()) {
+            System.out.println("found errors");
+            return new ModelAndView("update-event-view");
+        }
+        return null;
     }
 
     @PostMapping("/manage-events.htm")
@@ -86,6 +116,35 @@ public class AdminController {
             return sessionTimedOut(request);
         }
         return new ModelAndView("manage-events-view");
+    }
+
+    @PostMapping("/update-event.htm")
+    public ModelAndView updateEvent(HttpServletRequest request, HttpServletResponse response, HttpSession session, EventDao eventDao, Model model) {
+        if (invalidSessionObj(session, "user")) {
+            return sessionTimedOut(request);
+        }
+        int event_id = Integer.parseInt(request.getParameter("update-event"));
+        Event event = eventDao.getEvent(event_id);
+        if (event == null) {
+            if (session.getAttribute("event") != null) {
+                session.removeAttribute("event");
+            }
+            return serverError(request);
+        }
+        session.setAttribute("event", event);
+        Event e = new Event();
+        e.setEvent_id(event_id);
+        e.setEvent_name(event.getEvent_name());
+        e.setEvent_type(event.getEvent_type());
+        e.setEvent_cast(event.getEvent_cast());
+        e.setEvent_rating(event.getEvent_rating());
+        e.setEvent_genre(event.getEvent_genre());
+        e.setEvent_language(event.getEvent_language());
+        e.setEvent_summary(event.getEvent_summary());
+        e.setEvent_duration(event.getEvent_duration());
+        e.setEvent_date(event.getEvent_date());
+        model.addAttribute("updateEventForm", e);
+        return new ModelAndView("update-event-view");
     }
 
     @PostMapping("/manage-venues.htm")

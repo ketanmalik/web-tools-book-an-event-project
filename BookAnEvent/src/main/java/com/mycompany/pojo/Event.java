@@ -6,6 +6,7 @@
 package com.mycompany.pojo;
 
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -21,6 +22,7 @@ public class Event {
     private String event_language;
     private String event_summary;
     private int event_duration;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date event_date;
 
     public int getEvent_id() {

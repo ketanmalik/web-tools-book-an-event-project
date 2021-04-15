@@ -47,6 +47,19 @@ public class EventDao extends DAO {
         return res;
     }
 
+    public Event getEvent(int event_id) {
+        beginTransaction();
+        String hql = "FROM Event WHERE event_id=:event_id";
+        Query query = getSession().createQuery(hql);
+        query.setParameter("event_id", event_id);
+        List<Event> eventList = query.list();
+        if (eventList.isEmpty()) {
+            return null;
+        }
+        commit();
+        return eventList.get(0);
+    }
+
     public List<Event> getEventList() {
         beginTransaction();
         String hql = "FROM Event";

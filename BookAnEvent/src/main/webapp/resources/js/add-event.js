@@ -14,7 +14,7 @@ function validateAddEventForm() {
     var event_summary = document.getElementsByName("event-summary")[0].value;
     var event_date = document.getElementsByName("event-date")[0].value;
     var event_duration = document.getElementsByName("event-duration")[0].value;
-
+    debugger;
     if (!event_name || event_name.trim() === "") {
         alert("Please enter a valid event name");
         return false;
