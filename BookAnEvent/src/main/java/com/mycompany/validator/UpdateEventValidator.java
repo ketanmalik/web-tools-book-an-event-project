@@ -5,8 +5,8 @@
  */
 package com.mycompany.validator;
 
-import com.mycompany.dao.EventDao;
 import com.mycompany.pojo.Event;
+import com.mycompany.utils.Util;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -36,5 +36,13 @@ public class UpdateEventValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "event_summary", "NotEmpty.updateEventForm.summary", "Please enter a valid event summary");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "event_duration", "NotEmpty.updateEventForm.duration", "Please enter a valid event duration");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "event_date", "NotEmpty.updateEventForm.date", "Please select a valid event date");
+        
+        if(event.getEvent_summary().length() > 2000) {
+            errors.rejectValue("event_summary", "NotEmpty.updateEventForm.long_summary", "Event summary is too long");
+        }
+        
+        if(event.getEvent_duration().length() > 0 && !Util.validEventDuration(event.getEvent_duration())) {
+            errors.rejectValue("event_duration","NotEmpty.updateEventForm.invalid_duration", "Please enter a valid event duration in minutes");
+        }
     }
 }

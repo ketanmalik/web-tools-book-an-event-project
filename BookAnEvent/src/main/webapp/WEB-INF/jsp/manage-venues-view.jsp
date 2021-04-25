@@ -4,14 +4,15 @@
     Author     : ketanmalik
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="webjars/bootstrap/4.6.0-1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="webjars/font-awesome/5.15.2/css/fontawesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css" type="text/css">
-        <!-- <script src="<%=request.getContextPath()%>/resources/js/log-in.js"></script> -->
         <title>Admin</title>
     </head>
     <body>
@@ -49,9 +50,41 @@
                     </ul>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <form action="add-venue.htm" method="post">
+                        <input class="btn btn-primary" type="submit" value="Add a Venue" />
+                    </form>
+                    <div style="margin:1rem">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Venue ID</th>
+                                    <th scope="col">Venue Name</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="venue" items="${sessionScope.venueList}">
+                                    <tr>
+                                        <td>${venue.venue_id}</td>
+                                        <td>${venue.venue_name}</td>
+                                        <td>
+                                            <div style="display: flex; justify-content: center">
+                                                <form action="delete-venue.htm" method="post">
+                                                    <input type="submit" class="btn btn-outline-danger" value="Delete" />
+                                                    <input type="hidden" name="delete-venue" value="${venue.venue_id}" />
+                                                </form>
+                                                &emsp;
+                                                <form action="update-venue.htm" method="post">
+                                                    <input type="submit" class="btn btn-outline-primary" value="Update" />
+                                                    <input type="hidden" name="update-venue" value="${venue.venue_id}" />
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

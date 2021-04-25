@@ -13,14 +13,6 @@
         <link href="webjars/font-awesome/5.15.2/css/fontawesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css" type="text/css">
         <script src="<%=request.getContextPath()%>/resources/js/add-event.js"></script>
-        <script type="text/javascript"> 
-            $(document).ready(function () {
-                $(function () {
-                    var date = new Date().toISOString().split('T')[0];
-                    $('#date').attr('min', date);
-                })
-            })
-        </script>
         <title>Add Event</title>
     </head>
     <body>

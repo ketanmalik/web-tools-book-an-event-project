@@ -23,3 +23,9 @@ and open the template in the editor.
     display: flex;
     justify-content: center;
 }
+
+.form-error {
+    color: red;
+    display: flex;
+    font-size: 14px;
+}

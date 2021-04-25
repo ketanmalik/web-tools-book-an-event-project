@@ -9,6 +9,7 @@ import com.mycompany.dao.EventDao;
 import com.mycompany.dao.UserDao;
 import com.mycompany.pojo.Event;
 import com.mycompany.pojo.User;
+import java.io.Serializable;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author ketanmalik
  */
 @Controller
-public class UserController {
+public class UserController implements Serializable {
 
     @PostMapping("/sign-up-success.htm")
     public ModelAndView signUpUser(HttpServletRequest request, HttpServletResponse response, UserDao userDao) {
@@ -89,8 +90,11 @@ public class UserController {
     }
 
     @GetMapping("/log-in-success.htm")
-    public ModelAndView redirectUser(HttpSession session) {
+    public ModelAndView redirectUser(HttpSession session, EventDao eventDao) {
         if (session.getAttribute("user") != null) {
+            session.removeAttribute("eventList");
+            List<Event> eventList = eventDao.getEventList();
+            session.setAttribute("eventList", eventList);
             return new ModelAndView("manage-events-view");
         } else {
             return new ModelAndView("index");
@@ -100,7 +104,10 @@ public class UserController {
     @PostMapping("/sign-out.htm")
     public ModelAndView signOutUser(HttpSession session) {
         session.removeAttribute("user");
+        session.removeAttribute("event");
         session.removeAttribute("eventList");
+        session.removeAttribute("venue");
+        session.removeAttribute("venueList");
         return new ModelAndView("index");
     }
 }

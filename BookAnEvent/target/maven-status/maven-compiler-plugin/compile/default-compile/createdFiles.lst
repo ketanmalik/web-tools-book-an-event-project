@@ -1,12 +1,14 @@
+com/mycompany/controller/AdminEventController.class
 com/mycompany/pojo/User.class
+com/mycompany/pojo/Venue.class
 com/mycompany/utils/Util.class
-com/mycompany/controller/AdminController.class
+com/mycompany/controller/AdminVenueController.class
+com/mycompany/dao/VenueDao.class
 com/mycompany/dao/DAO.class
 com/mycompany/dao/EventDao.class
 com/mycompany/controller/UserController.class
-com/mycompany/utils/Util$1.class
+com/mycompany/validator/VenueValidator.class
 com/mycompany/dao/UserDao.class
-com/mycompany/utils/Util$CustomerIntEditor.class
 com/mycompany/validator/UpdateEventValidator.class
 com/mycompany/controller/NavbarController.class
 com/mycompany/pojo/Event.class

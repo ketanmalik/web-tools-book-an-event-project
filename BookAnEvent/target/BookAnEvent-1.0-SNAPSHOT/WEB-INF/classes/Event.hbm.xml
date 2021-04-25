@@ -18,7 +18,7 @@ and open the template in the editor.
         <property name="event_genre" type="string" />
         <property name="event_language" type="string" />
         <property name="event_summary" type="string" />
-        <property name="event_duration" type="int" />
+        <property name="event_duration" type="string" />
         <property name="event_date" type="java.util.Date" />
     </class>
 </hibernate-mapping>

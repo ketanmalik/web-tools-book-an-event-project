@@ -22,9 +22,10 @@ create table event (
     event_genre varchar(100) NOT NULL,
     event_language varchar(100) NOT NULL,
     event_summary varchar(2000) NOT NULL,
-    event_duration int NOT NULL,
+    event_duration varchar(100) NOT NULL,
     event_date DATE NOT NULL,
     PRIMARY KEY (event_id)
 );
-commit;
+
+
 

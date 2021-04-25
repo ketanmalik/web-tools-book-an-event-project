@@ -5,6 +5,7 @@
  */
 package com.mycompany.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,7 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author ketanmalik
  */
-public class Event {
+public class Event implements Serializable {
     private int event_id;
     private String event_name;
     private String event_type;
@@ -21,7 +22,7 @@ public class Event {
     private String event_genre;
     private String event_language;
     private String event_summary;
-    private int event_duration;
+    private String event_duration;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date event_date;
 
@@ -89,11 +90,11 @@ public class Event {
         this.event_summary = event_summary;
     }
 
-    public int getEvent_duration() {
+    public String getEvent_duration() {
         return event_duration;
     }
 
-    public void setEvent_duration(int event_duration) {
+    public void setEvent_duration(String event_duration) {
         this.event_duration = event_duration;
     }
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<hibernate-mapping>
+    <class name="com.mycompany.pojo.Venue" table="venue">
+        <id name="venue_id" type="int">
+            <generator class="native"/>
+        </id>
+        <property name="venue_name" type="string" not-null="true" />
+        <property name="venue_city" type="string" not-null="true" />
+        <property name="venue_state" type="string" not-null="true" />
+        <property name="venue_country" type="string" not-null="true" />
+        <property name="seat_price" type="int" not-null="true" />
+        <property name="venue_rows" type="int" not-null="true" />
+        <property name="seat_per_row" type="int" not-null="true" />
+    </class>
+</hibernate-mapping>
