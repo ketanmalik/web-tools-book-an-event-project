@@ -115,6 +115,8 @@
                                 <input type="text" class="form-control" name="event-duration" aria-describedby="event-duration" placeholder="Enter duration in minutes">
                             </div>
                         </div>
+                        <a class="btn btn-warning my-2 my-sm-0" href="/BookAnEvent/manage-events.htm">Go Back</a>
+                        &emsp;
                         <input class="btn btn-primary" type="submit" value="Add Event" />
                     </form>
                 </div>

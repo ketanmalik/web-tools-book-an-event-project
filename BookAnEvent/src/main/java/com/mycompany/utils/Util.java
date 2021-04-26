@@ -5,10 +5,8 @@
  */
 package com.mycompany.utils;
 
-import java.beans.PropertyEditorSupport;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.springframework.web.bind.WebDataBinder;
 
 /**
  *
@@ -27,26 +25,4 @@ public class Util {
         Matcher m = p.matcher(duration);
         return m.matches();
     }
-
-//    public static void registerIntFormat(WebDataBinder binder) {
-//        binder.registerCustomEditor(Integer.class, new CustomerIntEditor());
-//    }
-//
-//    private static class CustomerIntEditor extends PropertyEditorSupport {
-//
-//        @Override
-//        public String getAsText() {
-//            Integer i = (Integer) this.getValue();
-//            return i.toString();
-//        }
-//
-//        @Override
-//        public void setAsText(String str) {
-//            if (str == null || str.trim().equals("")) {
-//                this.setValue(0);
-//            } else {
-//                this.setValue(Integer.parseInt(str));
-//            }
-//        }
-//    }
 }

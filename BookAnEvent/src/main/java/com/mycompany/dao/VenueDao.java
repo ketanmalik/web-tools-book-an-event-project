@@ -71,7 +71,8 @@ public class VenueDao extends DAO {
             return 1;
         } catch (Exception e) {
             rollback();
-            System.out.println("Exception in saveVenue: " + e);
+            System.out.println("Exception in saveVenue: ");
+            e.printStackTrace();
             return 0;
         }
     }
@@ -82,21 +83,14 @@ public class VenueDao extends DAO {
             String venue_city = venue.getVenue_city();
             String venue_state = venue.getVenue_state();
             String venue_country = venue.getVenue_country();
-            int venue_rows = venue.getVenue_rows();
-            int seat_price = venue.getSeat_price();
-            int seat_per_row = venue.getSeat_per_row();
             String hql = "UPDATE Venue SET venue_name=:venue_name, venue_city=:venue_city, venue_state=:venue_state, "
-                    + "venue_country=:venue_country, venue_rows=:venue_rows, seat_price=:seat_price, seat_per_row=:seat_per_row "
-                    + "WHERE venue_id=:venue_id";
+                    + "venue_country=:venue_country WHERE venue_id=:venue_id";
             Query query = getSession().createQuery(hql);
             query.setParameter("venue_id", venue_id);
             query.setParameter("venue_name", venue_name);
             query.setParameter("venue_city", venue_city);
             query.setParameter("venue_state", venue_state);
             query.setParameter("venue_country", venue_country);
-            query.setParameter("venue_rows", venue_rows);
-            query.setParameter("seat_price", seat_price);
-            query.setParameter("seat_per_row", seat_per_row);
             beginTransaction();
             int res = query.executeUpdate();
             commit();

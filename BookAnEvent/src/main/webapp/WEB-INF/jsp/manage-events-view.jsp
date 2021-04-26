@@ -39,11 +39,6 @@
                         </li>
                         <li class="nav-item">
                             <form action="" method="post">
-                                <input class="nav-link" type="submit" class="" value="Map Events & Venues" />
-                            </form>
-                        </li>
-                        <li class="nav-item">
-                            <form action="" method="post">
                                 <input class="nav-link" type="submit" class="" value="Manage Users" />
                             </form>
                         </li>
@@ -77,7 +72,7 @@
                                                 </form>
                                                 &emsp;
                                                 <form action="update-event.htm" method="post">
-                                                    <input type="submit" class="btn btn-outline-primary" value="Update" />
+                                                    <input type="submit" class="btn btn-outline-primary" value="View / Update" />
                                                     <input type="hidden" name="update-event" value="${event.event_id}" />
                                                 </form>
                                             </div>

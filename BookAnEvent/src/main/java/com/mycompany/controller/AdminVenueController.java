@@ -7,6 +7,8 @@ package com.mycompany.controller;
 
 import com.mycompany.dao.VenueDao;
 import com.mycompany.pojo.Venue;
+import com.mycompany.pojo.Show;
+import com.mycompany.validator.ShowValidator;
 import com.mycompany.validator.VenueValidator;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +38,7 @@ public class AdminVenueController {
     @InitBinder("venue")
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(venueValidator);
+        
     }
 
     @PostMapping("/add-venue.htm")

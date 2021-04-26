@@ -114,7 +114,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <form:label path="event_date" for="event-date" class="col-sm-2 col-form-label">Event Date</form:label>
+                            <form:label path="event_date" for="event-date" class="col-sm-2 col-form-label">Event Release Date</form:label>
                                 <div class="col-sm-4">
                                 <form:input path="event_date" class="form-control" type="date" name="event-date" />
                                 <form:errors path="event_date" class="form-error" />
@@ -125,6 +125,8 @@
                                 <form:errors path="event_duration" class="form-error" />
                             </div>
                         </div>
+                        <a class="btn btn-warning my-2 my-sm-0" href="/BookAnEvent/manage-events.htm">Go Back</a>
+                        &emsp;
                         <input class="btn btn-primary" type="submit" value="Update Event" />
                     </form:form>
                 </div>

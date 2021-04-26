@@ -14,8 +14,5 @@ and open the template in the editor.
         <property name="venue_city" type="string" not-null="true" />
         <property name="venue_state" type="string" not-null="true" />
         <property name="venue_country" type="string" not-null="true" />
-        <property name="seat_price" type="int" not-null="true" />
-        <property name="venue_rows" type="int" not-null="true" />
-        <property name="seat_per_row" type="int" not-null="true" />
     </class>
 </hibernate-mapping>

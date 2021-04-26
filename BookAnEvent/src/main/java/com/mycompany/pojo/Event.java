@@ -7,6 +7,8 @@ package com.mycompany.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -25,6 +27,7 @@ public class Event implements Serializable {
     private String event_duration;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date event_date;
+    private Set<Venue> venues = new HashSet<>(0);
 
     public int getEvent_id() {
         return event_id;
@@ -104,5 +107,13 @@ public class Event implements Serializable {
 
     public void setEvent_date(Date event_date) {
         this.event_date = event_date;
+    }
+
+    public Set<Venue> getVenues() {
+        return venues;
+    }
+
+    public void setVenues(Set<Venue> venues) {
+        this.venues = venues;
     }
 }

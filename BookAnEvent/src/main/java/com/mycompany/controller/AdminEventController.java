@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -119,6 +120,14 @@ public class AdminEventController {
         }
     }
 
+    @GetMapping("/manage-events.htm")
+    public ModelAndView signUpPage(HttpServletRequest request, HttpSession session) {
+        if (invalidSessionObj(session, "user")) {
+            return sessionTimedOut(request);
+        }
+        return new ModelAndView("manage-events-view");
+    }
+    
     @PostMapping("/manage-events.htm")
     public ModelAndView manageEvents(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         if (invalidSessionObj(session, "user")) {

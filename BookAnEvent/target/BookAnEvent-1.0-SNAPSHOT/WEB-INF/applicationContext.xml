@@ -23,8 +23,10 @@
 
     <bean name="event" class="com.mycompany.pojo.Event" />
     <bean name="eventDao" class="com.mycompany.dao.EventDao" />
+    <bean name="showDao" class="com.mycompany.dao.ShowDao" />
     <bean name="userDao" class="com.mycompany.dao.UserDao" />
     <bean name="venueDao" class="com.mycompany.dao.VenueDao" />
     <bean name="addVenueValidator" class="com.mycompany.validator.VenueValidator" />
     <bean name="updateEventValidator" class="com.mycompany.validator.UpdateEventValidator" />
+    <bean name="showValidator" class="com.mycompany.validator.ShowValidator" />
 </beans>

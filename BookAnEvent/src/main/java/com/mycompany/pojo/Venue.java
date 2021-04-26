@@ -6,6 +6,8 @@
 package com.mycompany.pojo;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 
@@ -19,9 +21,7 @@ public class Venue implements Serializable {
     private String venue_city;
     private String venue_state;
     private String venue_country;
-    private Integer seat_price;
-    private Integer venue_rows;
-    private Integer seat_per_row;
+    private Set<Event> events = new HashSet<>(0);
 
     public int getVenue_id() {
         return venue_id;
@@ -63,27 +63,11 @@ public class Venue implements Serializable {
         this.venue_country = venue_country;
     }
 
-    public Integer getSeat_price() {
-        return seat_price;
+    public Set<Event> getEvents() {
+        return events;
     }
 
-    public void setSeat_price(Integer seat_price) {
-        this.seat_price = seat_price;
-    }
-
-    public Integer getVenue_rows() {
-        return venue_rows;
-    }
-
-    public void setVenue_rows(Integer venue_rows) {
-        this.venue_rows = venue_rows;
-    }
-
-    public Integer getSeat_per_row() {
-        return seat_per_row;
-    }
-
-    public void setSeat_per_row(Integer seat_per_row) {
-        this.seat_per_row = seat_per_row;
+    public void setEvents(Set<Event> events) {
+        this.events = events;
     }
 }

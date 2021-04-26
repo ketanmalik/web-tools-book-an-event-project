@@ -128,25 +128,8 @@
                             <form:input path="venue_country" type="text" class="form-control" name="venue-country" aria-describedby="venue-country" value="USA" readonly="true" />
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <form:label path="venue_rows" for="venue-rows" class="col-sm-2 col-form-label">Rows</form:label>
-                            <div class="col-sm-4">
-                            <form:input path="venue_rows" type="number" min="1" class="form-control" name="venue-rows" aria-describedby="venue-rows" placeholder="Enter rows" />
-                            <form:errors path="venue_rows" class="form-error" />
-                        </div>
-                        <form:label path="seat_per_row" for="seat-per-row" class="col-sm-2 col-form-label">Seats per row</form:label>
-                            <div class="col-sm-4">
-                            <form:input path="seat_per_row" type="number" min="1" class="form-control" name="seat-per-row" aria-describedby="seat-per-row" placeholder="Enter seats per row" />
-                            <form:errors path="seat_per_row" class="form-error" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <form:label path="seat_price" for="seat-price" class="col-sm-2 col-form-label">Seat Price</form:label>
-                            <div class="col-sm-4">
-                            <form:input path="seat_price" type="number" min="1" class="form-control" name="seat-price" aria-describedby="seat-price" placeholder="Enter seat price" />
-                            <form:errors path="seat_price" class="form-error" />
-                        </div>
-                    </div>
+                    <a class="btn btn-warning my-2 my-sm-0" href="/BookAnEvent/manage-venues.htm">Go Back</a>
+                    &emsp;
                     <input class="btn btn-primary" type="submit" value="Add Venue" />
                 </form:form>
             </div>

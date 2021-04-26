@@ -27,5 +27,12 @@ create table event (
     PRIMARY KEY (event_id)
 );
 
+CREATE TABLE `event_venue_show` (
+  `event_id` int NOT NULL,
+  `venue_id` int NOT NULL,
+  PRIMARY KEY (`venue_id`,`event_id`),
+  KEY `fk_event` (`event_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
 
 
