@@ -72,7 +72,7 @@ public class BookingController {
     }
 
     @PostMapping("/step-4.htm")
-    public ModelAndView confirmBooking(@ModelAttribute("bookingForm") Booking booking, BindingResult result, HttpServletRequest request, HttpSession session, BookingDao bookingDao) {
+    public ModelAndView confirmBooking(@ModelAttribute("bookingForm") Booking booking, BindingResult result, HttpServletRequest request, HttpSession session, BookingDao bookingDao, ShowDao showDao) {
         if (invalidSessionObj(session, "user")) {
             return sessionTimedOut(request);
         }
@@ -85,7 +85,6 @@ public class BookingController {
         if (result.hasErrors()) {
             return new ModelAndView("customer-details-view");
         }
-        Util.printSessionAttributes(session);
         try {
             Date booking_date = new Date();
             String phone = booking.getPhone();
@@ -94,14 +93,31 @@ public class BookingController {
             User user = (User) session.getAttribute("user");
             Event event = (Event) session.getAttribute("requestedEvent");
             Venue venue = (Venue) session.getAttribute("requestedVenue");
-            Booking res = bookingDao.saveBooking(booking_date, phone, seats, price, user, event, venue);
-            if (res != null) {
+            Booking savedBooking = bookingDao.saveBooking(booking_date, phone, seats, price, user, event, venue, selectedShow);
+
+            if (savedBooking != null) {
+                Show updatedShow = showDao.updateSeatsLeft(selectedShow.getShow_id(), seats);
+                if (updatedShow == null) {
+                    bookingDao.deleteBooking(savedBooking.getBooking_id());
+                    request.setAttribute("errorMsg1", "Your booking could not be confirmed");
+                    request.setAttribute("errorMsg2", "The show you selected ran out of seats. Please select a different show to book.");
+                    return new ModelAndView("error-view");
+                }
+                Util.printSessionAttributes(session);
+                session.removeAttribute("selectedCity");
+                session.removeAttribute("requestedShows");
+                session.removeAttribute("requestedVenue");
+                session.removeAttribute("requestedEvent");
+                session.removeAttribute("selectedShow");
+                session.removeAttribute("selectedEvent");
+                session.removeAttribute("eventsInCity");
                 request.setAttribute("successMsg1", "Your booking has been confirmed.");
                 request.setAttribute("successMsg2", "We hope you've had a wonderful experience and we wish to serve you soon.");
                 return new ModelAndView("success-view");
             } else {
                 return serverError(request, "Your booking could not be confirmed");
             }
+
         } catch (Exception e) {
             System.out.println("Exception in confirmBooking (BookingController): ");
             return serverError(request, "Your booking could not be confirmed");

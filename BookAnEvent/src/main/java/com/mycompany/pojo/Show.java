@@ -27,6 +27,23 @@ public class Show implements Serializable {
     private String screen;
     private int seats_left;
 
+    public Show() {
+    }
+
+    public Show(int show_id, Integer seat_price, Integer total_rows, Integer seats_per_row, String show_time, int seats_left, Date show_date, String screen, Event event, Venue venue) {
+        this.show_id = show_id;
+        this.seat_price = seat_price;
+        this.total_rows = total_rows;
+        this.seats_per_row = seats_per_row;
+        this.show_time = show_time;
+        this.seats_left = seats_left;
+        this.show_date = show_date;
+        this.screen = screen;
+        this.event = event;
+        this.venue = venue;
+
+    }
+
     public int getShow_id() {
         return show_id;
     }

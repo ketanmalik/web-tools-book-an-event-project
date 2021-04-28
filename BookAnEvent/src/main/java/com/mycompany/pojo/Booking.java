@@ -21,22 +21,21 @@ public class Booking {
     private Integer seats;
     private Integer price;
     private User user;
-    private Event event;
-    private Venue venue;
+    private Show show;
 
     public Booking() {
+
     }
 
-    public Booking(Date booking_date, String phone, Integer seats, Integer price, User user, Event event, Venue venue) {
+    public Booking(Date booking_date, String phone, Integer seats, Integer price, User user, Show show) {
         this.booking_date = booking_date;
         this.phone = phone;
         this.seats = seats;
         this.price = price;
         this.user = user;
-        this.event = event;
-        this.venue = venue;
+        this.show = show;
     }
-    
+
     public int getBooking_id() {
         return booking_id;
     }
@@ -85,19 +84,12 @@ public class Booking {
         this.user = user;
     }
 
-    public Event getEvent() {
-        return event;
+    public Show getShow() {
+        return show;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setShow(Show show) {
+        this.show = show;
     }
 
-    public Venue getVenue() {
-        return venue;
-    }
-
-    public void setVenue(Venue venue) {
-        this.venue = venue;
-    }
 }

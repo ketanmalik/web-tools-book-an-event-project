@@ -28,7 +28,7 @@
                         <a class="btn btn-primary btn-lg" href="log-in-success.htm" role="button">Go to Admin</a>
                     </c:when>
                     <c:when test="${sessionScope.user != null && sessionScope.user.user_type == 'customer'}">
-                        <a class="btn btn-primary btn-lg" href="index.htm" role="button">Go to Customer</a>
+                        <a class="btn btn-primary btn-lg" href="index.htm" role="button">Make more Bookings</a>
                     </c:when>
                     <c:otherwise>
                         <a class="btn btn-primary btn-lg" href="index.htm" role="button">Go to Home Page</a>

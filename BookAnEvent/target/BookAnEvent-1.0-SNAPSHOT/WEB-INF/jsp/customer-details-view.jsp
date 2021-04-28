@@ -18,6 +18,15 @@
         <title>BookAnEvent</title>
     </head>
     <body>
+        <script type="text/javascript">
+            function getTotalPrice()
+            {
+                var selectedSeats = document.getElementById("selected-seats").value;
+                var seatPrice = document.getElementById("seat-price").value;
+                var totalPrice = document.getElementById("total-price");
+                totalPrice.value = selectedSeats * seatPrice;
+            }
+        </script>
         <nav class="navbar navbar-dark bg-dark">
             <a class="navbar-brand">BookAnEvent</a>
             <form action="sign-out.htm" method="post">
@@ -25,6 +34,7 @@
             </form>
         </nav>
         <div class="container">
+            <input type="hidden" value="${sessionScope.selectedShow.seat_price}" id="seat-price" />
             <h3 class="form-heading">Book An Event</h3>
             <div class="container">
                 <div class="progress" style="margin-top: 3rem">
@@ -61,12 +71,13 @@
                         <div class="form-group row">
                             <form:label path="seats" for="seats" class="col-sm-2 col-form-label">Seats to reserve</form:label>
                                 <div class="col-sm-4">
-                                <form:input path="seats" type="number" min="1" class="form-control" name="seats" aria-describedby="seats" value="1" placeholder="Enter number of seats to reserve" />
+                                <form:input path="seats" type="number" min="1" class="form-control" name="seats" aria-describedby="seats" value="1" placeholder="Enter number of seats to reserve" 
+                                            id="selected-seats" onchange="getTotalPrice()"/>
                                 <form:errors path="seats" class="form-error" />
                             </div>
                             <form:label path="price" for="price" class="col-sm-2 col-form-label">Total Price</form:label>
                                 <div class="col-sm-4">
-                                <form:input path="price" type="text" class="form-control" name="price" aria-describedby="price" placeholder="Total price" readonly="true" />
+                                <form:input path="price" value="${sessionScope.selectedShow.seat_price}" type="text" class="form-control" id="total-price" name="price" aria-describedby="price" placeholder="Total price" readonly="true" />
                                 <form:errors path="price" class="form-error" />
                             </div>
                         </div>
@@ -75,11 +86,6 @@
                             <input class="btn btn-primary" type="submit" value="Confirm Booking" />
                         </div>
                     </form:form>
-
-                    <form action="step-4.htm" method="post">
-
-
-                    </form>
                 </div>
             </div>
         </div>

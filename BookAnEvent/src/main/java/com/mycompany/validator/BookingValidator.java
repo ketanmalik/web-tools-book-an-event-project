@@ -55,11 +55,18 @@ public class BookingValidator implements Validator {
 
     public void validateCustom(Errors errors, Booking booking, Show show) {
         try {
-            int seats = booking.getSeats();
-            int price_per_seat = show.getSeat_price();
-            int price = seats * price_per_seat;
-            if (price <= 0) {
-                errors.rejectValue("price", "NotEmpty.bookingForm.price", "Please enter valid no. of seats to calculate price");
+            boolean validSeatsLeft = false;
+            int seatsToBook = booking.getSeats();
+            int seats_left = show.getSeats_left();
+            validSeatsLeft = (seats_left - seatsToBook >= 0);
+            if (!validSeatsLeft) {
+                errors.rejectValue("seats", "NotEmpty.bookingForm.less_seats", "Cannot book " + seatsToBook + " seats when only " + seats_left + " are left");
+            } else {
+                int price_per_seat = show.getSeat_price();
+                int price = seatsToBook * price_per_seat;
+                if (price <= 0) {
+                    errors.rejectValue("price", "NotEmpty.bookingForm.price", "Please enter valid no. of seats to calculate price");
+                }
             }
         } catch (Exception e) {
             System.out.println("Exception in bookingCustomValidator (price)");
