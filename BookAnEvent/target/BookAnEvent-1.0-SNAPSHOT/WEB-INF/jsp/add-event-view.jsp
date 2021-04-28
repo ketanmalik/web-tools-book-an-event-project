@@ -89,6 +89,7 @@
                                     <option value="Crime">Crime</option>
                                     <option value="Fantasy">Fantasy</option>
                                     <option value="Horror">Horror</option>
+                                    <option value="Horror">Live</option>
                                     <option value="Mystery">Mystery</option>
                                     <option value="Romance">Romance</option>
                                     <option value="Sci-Fi">Sci-Fi</option>

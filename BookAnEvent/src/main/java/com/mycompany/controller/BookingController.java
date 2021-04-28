@@ -15,6 +15,7 @@ import com.mycompany.pojo.User;
 import com.mycompany.pojo.Venue;
 import com.mycompany.utils.Util;
 import com.mycompany.validator.BookingValidator;
+import com.mycompany.view.BookingView;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -103,17 +105,8 @@ public class BookingController {
                     request.setAttribute("errorMsg2", "The show you selected ran out of seats. Please select a different show to book.");
                     return new ModelAndView("error-view");
                 }
-                Util.printSessionAttributes(session);
-                session.removeAttribute("selectedCity");
-                session.removeAttribute("requestedShows");
-                session.removeAttribute("requestedVenue");
-                session.removeAttribute("requestedEvent");
-                session.removeAttribute("selectedShow");
-                session.removeAttribute("selectedEvent");
-                session.removeAttribute("eventsInCity");
-                request.setAttribute("successMsg1", "Your booking has been confirmed.");
-                request.setAttribute("successMsg2", "We hope you've had a wonderful experience and we wish to serve you soon.");
-                return new ModelAndView("success-view");
+                saveBookingPdf(session, savedBooking, venue, selectedShow);
+                return new ModelAndView("customer-confirm-view");
             } else {
                 return serverError(request, "Your booking could not be confirmed");
             }
@@ -138,5 +131,32 @@ public class BookingController {
         request.setAttribute("errorMsg1", msg1);
         request.setAttribute("errorMsg2", "There was a problem in reaching out to our servers. Please try again later.");
         return new ModelAndView("error-view");
+    }
+
+    public void saveBookingPdf(HttpSession session, Booking booking, Venue venue, Show show) {
+        User user = booking.getUser();
+        String booking_id = booking.getBooking_id() + "";
+        String event_name = (String) session.getAttribute("selectedEvent");
+        String pdf_venue = venue.getVenue_name() + ", " + venue.getVenue_city();
+        String pdf_event_date_time = show.getShow_time() + ", " + Util.dateToString(show.getShow_date(), "date");
+        String screen = show.getScreen();
+        String seats = booking.getSeats() + "";
+        String price = "$" + booking.getPrice();
+        String booking_date = Util.dateToString(booking.getBooking_date(), "dateTime");
+        String name = user.getfName() + " " + user.getlName();
+        String contact = user.getEmail() + " " + booking.getPhone();
+        BookingView bookingPdf = new BookingView(booking_id, event_name, pdf_venue, pdf_event_date_time, screen, seats, price, booking_date, name, contact);
+        removeTempSessionAttributes(session);
+        session.setAttribute("bookingPdf", bookingPdf);
+    }
+    
+    private void removeTempSessionAttributes(HttpSession session) {
+        session.removeAttribute("selectedCity");
+        session.removeAttribute("requestedShows");
+        session.removeAttribute("requestedVenue");
+        session.removeAttribute("requestedEvent");
+        session.removeAttribute("selectedShow");
+        session.removeAttribute("selectedEvent");
+        session.removeAttribute("eventsInCity");
     }
 }

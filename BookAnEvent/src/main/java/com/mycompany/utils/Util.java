@@ -5,6 +5,9 @@
  */
 package com.mycompany.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,5 +39,15 @@ public class Util {
             System.out.println(attribute + " : " + session.getAttribute(attribute));
         }
         System.out.println("--------Printing session attributes completed--------");
+    }
+    
+    public static String dateToString(Date date, String mode) {
+        DateFormat dateFormat;
+        if(mode.equals("date")) {
+            dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+        } else {
+            dateFormat = new SimpleDateFormat("dd MMMM yyyy hh:mm:ss");
+        }
+        return dateFormat.format(date);
     }
 }

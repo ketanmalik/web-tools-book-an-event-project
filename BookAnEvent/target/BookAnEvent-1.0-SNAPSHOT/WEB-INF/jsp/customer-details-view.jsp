@@ -75,7 +75,7 @@
                                             id="selected-seats" onchange="getTotalPrice()"/>
                                 <form:errors path="seats" class="form-error" />
                             </div>
-                            <form:label path="price" for="price" class="col-sm-2 col-form-label">Total Price</form:label>
+                            <form:label path="price" for="price" class="col-sm-2 col-form-label">Total Price (USD)</form:label>
                                 <div class="col-sm-4">
                                 <form:input path="price" value="${sessionScope.selectedShow.seat_price}" type="text" class="form-control" id="total-price" name="price" aria-describedby="price" placeholder="Total price" readonly="true" />
                                 <form:errors path="price" class="form-error" />

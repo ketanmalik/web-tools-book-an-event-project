@@ -27,10 +27,18 @@
         </property>
     </bean>
 
-    <bean id="viewResolver"
+    <bean 
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
-          p:suffix=".jsp" />
+          p:suffix=".jsp" >
+        <property name="order" value="2"></property>
+    </bean>
+    
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+        <property name="order" value="1"></property>
+        <property name="basename" value="views"></property>
+    </bean>
 
     <!--
     The index controller.
