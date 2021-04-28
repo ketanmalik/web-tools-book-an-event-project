@@ -25,10 +25,10 @@
             <p class="lead">
             <c:choose>
                 <c:when test="${sessionScope.user != null && sessionScope.user.user_type == 'admin'}">
-                    <a class="btn btn-primary btn-lg" href="log-in-success.htm" role="button">Go to Admin's Dashboard</a>
+                    <a class="btn btn-primary btn-lg" href="log-in-user.htm" role="button">Go to Admin's Dashboard</a>
                 </c:when>
                 <c:when test="${sessionScope.user != null && sessionScope.user.user_type == 'customer'}">
-                    <a class="btn btn-primary btn-lg" href="index.htm" role="button">Go to Customer</a>
+                    <a class="btn btn-primary btn-lg" href="log-in-user.htm" role="button">Make more Bookings</a>
                 </c:when>
                 <c:otherwise>
                     <a class="btn btn-primary btn-lg" href="index.htm" role="button">Go to Home Page</a>

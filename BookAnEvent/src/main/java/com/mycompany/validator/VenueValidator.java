@@ -28,8 +28,5 @@ public class VenueValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "venue_city", "NotEmpty.addVenueForm.city", "Please enter a valid venue city");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "venue_state", "NotEmpty.addVenueForm.state", "Please select a valid venue state");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "venue_country", "NotEmpty.addVenueForm.country", "Please enter a valid venue country");
-//        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "venue_rows", "NotEmpty.addVenueForm.venue_rows", "Please enter valid number of rows");
-//        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "seat_price", "NotEmpty.addVenueForm.price", "Please enter a valid seat price");
-//        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "seat_per_row", "NotEmpty.addVenueForm.seat_per_row", "Please enter valid seats/row");
     }
 }

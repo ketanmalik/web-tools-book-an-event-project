@@ -20,7 +20,7 @@
         </nav>
         <div class="container">
             <h3 class="form-heading">Log In Form</h3>
-            <form action="log-in-success.htm" method="post">
+            <form action="log-in-user.htm" method="post">
                 <div class="form-group">
                     <label for="email">Email address</label>
                     <input type="text" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -34,6 +34,8 @@
                     <label class="form-check-label" for="show-password">Show Password</label>
                 </div>
                 <div id="submit-btn">
+                    <a class="btn btn-warning my-2 my-sm-0" href="/BookAnEvent/index.htm">Go Back</a>
+                    &emsp;
                     <input type="submit" class="btn btn-primary" value="Log In"/>
                 </div>
             </form>

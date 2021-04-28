@@ -29,3 +29,9 @@ and open the template in the editor.
     display: flex;
     font-size: 14px;
 }
+
+.btn-link.focus, .btn-link:focus, .btn-link:hover {
+    box-shadow: none !important;
+    text-decoration: none !important;
+}
+

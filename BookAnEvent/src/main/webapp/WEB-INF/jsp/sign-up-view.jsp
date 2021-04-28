@@ -121,6 +121,8 @@
                     </div>
                 </div>
                 <div id="submit-btn">
+                    <a class="btn btn-warning my-2 my-sm-0" href="/BookAnEvent/index.htm">Go Back</a>
+                    &emsp;
                     <input type="submit" class="btn btn-primary" value="Sign Up"/>
                 </div>
             </form>

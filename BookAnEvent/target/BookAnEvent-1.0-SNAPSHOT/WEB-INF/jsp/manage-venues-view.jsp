@@ -48,8 +48,8 @@
                     <form action="add-venue.htm" method="post">
                         <input class="btn btn-primary" type="submit" value="Add a Venue" />
                     </form>
-                    <div style="margin:1rem">
-                        <table class="table">
+                    <div style="margin:1rem" class="table-responsive">
+                        <table class="table table-hover">
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">Venue ID</th>

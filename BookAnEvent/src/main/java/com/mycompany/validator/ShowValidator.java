@@ -5,8 +5,8 @@
  */
 package com.mycompany.validator;
 
+import com.mycompany.pojo.Event;
 import com.mycompany.pojo.Show;
-import com.mycompany.utils.Util;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,6 +54,14 @@ public class ShowValidator implements Validator {
             }
         } catch (Exception e) {
             errors.rejectValue("show_date", "NotEmpty.addShowForm.show_date", "Please select a valid show date");
+        }
+    }
+
+    public void validateCustom(Errors errors, Event event, Show show) {
+        Date showDate = show.getShow_date();
+        Date eventDate = event.getEvent_date();
+        if (showDate.before(eventDate)) {
+            errors.rejectValue("show_date", "NotEmpty.addShowForm.before_release_date", "Show date cannot be before event releast date");
         }
     }
 }

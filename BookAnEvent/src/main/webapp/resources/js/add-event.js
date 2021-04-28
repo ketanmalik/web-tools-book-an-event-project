@@ -56,7 +56,7 @@ function validateAddEventForm() {
         alert("Event date cannot be in the past");
         return false;
     }
-    if (!event_duration || event_duration.trim() === "" || !event_duration.match(/^[1-9]+$/g)) {
+    if (!event_duration || event_duration.trim() === "" || !event_duration.match(/^[1-9][0-9]+/g)) {
         alert("Please enter a valid event duration");
         return false;
     }

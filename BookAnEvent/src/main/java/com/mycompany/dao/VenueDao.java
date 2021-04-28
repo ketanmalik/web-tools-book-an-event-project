@@ -17,28 +17,46 @@ import java.util.ArrayList;
 public class VenueDao extends DAO {
 
     public int deleteVenue(int venue_id) {
-        beginTransaction();
         String hql = "DELETE FROM Venue WHERE venue_id=:venue_id";
         Query query = getSession().createQuery(hql);
         query.setParameter("venue_id", venue_id);
+        beginTransaction();
         int res = query.executeUpdate();
         commit();
         return res;
     }
 
+    public List<String> getUniqueVenueCityList() {
+        try {
+            String hql = "SELECT DISTINCT venue_city FROM Venue";
+            Query query = getSession().createQuery(hql);
+            List<String> venueList = new ArrayList<>();
+            beginTransaction();
+            venueList = query.list();
+            commit();
+            return venueList;
+        } catch (Exception e) {
+            rollback();
+            System.out.println("Exception in getUniqueVenueList Dao: ");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Venue getVenue(int venue_id) {
         try {
-            beginTransaction();
             String hql = "FROM Venue WHERE venue_id=:venue_id";
             Query query = getSession().createQuery(hql);
             query.setParameter("venue_id", venue_id);
-            List<Venue> eventList = new ArrayList<>();
-            eventList = query.list();
-            if (eventList.isEmpty()) {
+            List<Venue> venueList = new ArrayList<>();
+            beginTransaction();
+            venueList = query.list();
+            if (venueList.isEmpty()) {
+                rollback();
                 return null;
             }
             commit();
-            return eventList.get(0);
+            return venueList.get(0);
         } catch (Exception e) {
             rollback();
             System.out.println("Exception in getVenue: " + e);
@@ -49,10 +67,10 @@ public class VenueDao extends DAO {
 
     public List<Venue> getVenueList() {
         try {
-            beginTransaction();
             String hql = "FROM Venue";
             Query query = getSession().createQuery(hql);
             List result = new ArrayList<>();
+            beginTransaction();
             result = query.list();
             commit();
             return result;
@@ -96,6 +114,7 @@ public class VenueDao extends DAO {
             commit();
             return res;
         } catch (Exception e) {
+            rollback();
             System.out.println("Exception in updateVenue: " + e);
             return 0;
         }

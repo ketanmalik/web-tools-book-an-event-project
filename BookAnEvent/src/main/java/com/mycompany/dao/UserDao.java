@@ -33,12 +33,12 @@ public class UserDao extends DAO {
             commit();
             return 1;
         } else {
+            rollback();
             return -1;
         }
     }
 
     public List<User> checkUser(String email, String password, String mode) {
-        beginTransaction();
         String hql = "";
         if (mode.equalsIgnoreCase("sign-up")) {
             hql = "FROM User where email=:email";
@@ -50,6 +50,7 @@ public class UserDao extends DAO {
         if (mode.equalsIgnoreCase("log-in")) {
             query.setParameter("password", password);
         }
+        beginTransaction();
         List result = query.list();
         commit();
         return result;

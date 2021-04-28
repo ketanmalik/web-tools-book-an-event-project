@@ -5,8 +5,10 @@
  */
 package com.mycompany.utils;
 
+import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -21,8 +23,18 @@ public class Util {
     }
 
     public static boolean validEventDuration(String duration) {
-        Pattern p = Pattern.compile("^[1-9]+$");
+        Pattern p = Pattern.compile("^[1-9][0-9]+");
         Matcher m = p.matcher(duration);
         return m.matches();
+    }
+
+    public static void printSessionAttributes(HttpSession session) {
+        System.out.println("--------Printing session attributes started--------");
+        Enumeration<String> attributes = session.getAttributeNames();
+        while (attributes.hasMoreElements()) {
+            String attribute = (String) attributes.nextElement();
+            System.out.println(attribute + " : " + session.getAttribute(attribute));
+        }
+        System.out.println("--------Printing session attributes completed--------");
     }
 }

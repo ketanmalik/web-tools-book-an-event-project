@@ -85,6 +85,7 @@
                                 <select class="form-control" name="event-genre">
                                     <option value="Action">Action</option>
                                     <option value="Adventure">Adventure</option>
+                                    <option value="Comedy">Comedy</option>
                                     <option value="Crime">Crime</option>
                                     <option value="Fantasy">Fantasy</option>
                                     <option value="Horror">Horror</option>

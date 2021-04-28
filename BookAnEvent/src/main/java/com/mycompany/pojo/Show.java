@@ -25,6 +25,7 @@ public class Show implements Serializable {
     private Date show_date;
     private String show_time;
     private String screen;
+    private int seats_left;
 
     public int getShow_id() {
         return show_id;
@@ -96,5 +97,13 @@ public class Show implements Serializable {
 
     public void setScreen(String screen) {
         this.screen = screen;
+    }
+
+    public int getSeats_left() {
+        return seats_left;
+    }
+
+    public void setSeats_left(int seats_left) {
+        this.seats_left = seats_left;
     }
 }

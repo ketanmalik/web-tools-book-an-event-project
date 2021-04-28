@@ -5,7 +5,6 @@
  */
 package com.mycompany.dao;
 
-import static com.mycompany.dao.DAO.getSession;
 import com.mycompany.pojo.Event;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,10 +18,10 @@ import org.hibernate.query.Query;
 public class EventDao extends DAO {
 
     public int deleteEvent(int event_id) {
-        beginTransaction();
         String hql = "DELETE FROM Event WHERE event_id=:event_id";
         Query query = getSession().createQuery(hql);
         query.setParameter("event_id", event_id);
+        beginTransaction();
         int res = query.executeUpdate();
         commit();
         return res;
@@ -30,13 +29,14 @@ public class EventDao extends DAO {
 
     public Event getEvent(int event_id) {
         try {
-            beginTransaction();
             String hql = "FROM Event WHERE event_id=:event_id";
             Query query = getSession().createQuery(hql);
             query.setParameter("event_id", event_id);
             List<Event> eventList = new ArrayList<>();
+            beginTransaction();
             eventList = query.list();
             if (eventList.isEmpty()) {
+                rollback();
                 return null;
             }
             commit();
@@ -48,24 +48,34 @@ public class EventDao extends DAO {
         }
     }
 
+    public Event getEventFromName(String event_name) {
+        try {
+            String hql = "FROM Event WHERE event_name = :event_name";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("event_name", event_name);
+            beginTransaction();
+            Event event = (Event) query.list().get(0);
+            commit();
+            return event;
+        } catch (Exception e) {
+            rollback();
+            System.out.println("Exception in getEventFromName Dao: " + e);
+            return null;
+        }
+    }
+
     public List<Event> getEventList() {
         try {
-            beginTransaction();
             String hql = "FROM Event";
             Query query = getSession().createQuery(hql);
             List<Event> result = new ArrayList<>();
+            beginTransaction();
             result = query.list();
             commit();
-//            System.out.println("-----------------------------");
-//            for(int i=0; i<result.size(); i++) {
-//                System.out.println("event id: " + result.get(i).getEvent_id());
-//                System.out.println("event name: " + result.get(i).getEvent_name());
-//            }
-//            System.out.println("-----------------------------");
             return result;
         } catch (Exception e) {
-            System.out.println("Exception in getEventList: " + e);
             rollback();
+            System.out.println("Exception in getEventList: " + e);
             return null;
         }
 

@@ -60,13 +60,19 @@ public class AdminShowController {
             int venue_id = Integer.parseInt(session.getAttribute("venue-id") + "");
             Event event = eventDao.getEvent(event_id);
             Venue venue = venueDao.getVenue(venue_id);
+            showValidator.validateCustom(result, event, show);
+            if (result.hasErrors()) {
+                return new ModelAndView("add-show-view");
+            }
             show.setEvent(event);
             show.setVenue(venue);
+            int total_rows = show.getTotal_rows();
+            int seats_per_row = show.getSeats_per_row();
+            int seats_left = total_rows * seats_per_row;
+            show.setSeats_left(seats_left);
             session.removeAttribute("venue-id");
             int res = showDao.addShow(show);
             if (res == 1) {
-//                List<Show> venueList = venueDao.getVenueList();
-//                session.setAttribute("eventList", venueList);
                 request.setAttribute("successMsg1", "Show added successfully.");
                 request.setAttribute("successMsg2", "Please go back to dashboard to manage events, users, and venues.");
                 return new ModelAndView("success-view");

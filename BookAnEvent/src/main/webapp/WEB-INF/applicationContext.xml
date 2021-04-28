@@ -29,4 +29,5 @@
     <bean name="addVenueValidator" class="com.mycompany.validator.VenueValidator" />
     <bean name="updateEventValidator" class="com.mycompany.validator.UpdateEventValidator" />
     <bean name="showValidator" class="com.mycompany.validator.ShowValidator" />
+    <bean name="bookingValidator" class="com.mycompany.validator.BookingValidator" />
 </beans>

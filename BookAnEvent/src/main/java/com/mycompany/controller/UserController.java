@@ -6,10 +6,15 @@
 package com.mycompany.controller;
 
 import com.mycompany.dao.EventDao;
+import com.mycompany.dao.ShowDao;
 import com.mycompany.dao.UserDao;
+import com.mycompany.dao.VenueDao;
 import com.mycompany.pojo.Event;
+import com.mycompany.pojo.Show;
 import com.mycompany.pojo.User;
+import com.mycompany.pojo.Venue;
 import java.io.Serializable;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,8 +66,8 @@ public class UserController implements Serializable {
         return new ModelAndView("error-view");
     }
 
-    @PostMapping("/log-in-success.htm")
-    public ModelAndView logInUser(HttpServletRequest request, HttpServletResponse response, UserDao userDao, HttpSession session, EventDao eventDao) {
+    @PostMapping("/log-in-user.htm")
+    public ModelAndView logInUser(HttpServletRequest request, HttpServletResponse response, UserDao userDao, HttpSession session, EventDao eventDao, VenueDao venueDao, ShowDao showDao) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         if (email.trim().equals("") || password.trim().equals("")) {
@@ -80,22 +85,35 @@ public class UserController implements Serializable {
             return new ModelAndView("error-view");
         } else {
             List<Event> eventList = eventDao.getEventList();
+            List<Venue> venueList = venueDao.getVenueList();
+            List<Show> showList = showDao.getShowList();
             session.setAttribute("user", user.get(0));
             session.setAttribute("eventList", eventList);
+            session.setAttribute("venueList", venueList);
+            session.setAttribute("showList", showList);
+
             if (user.get(0).getUser_type().equals("admin")) {
                 return new ModelAndView("manage-events-view");
+            } else {
+                List<String> venueCityList = venueDao.getUniqueVenueCityList();
+                session.setAttribute("venueCityList", venueCityList);
+                return new ModelAndView("customer-view");
             }
-            return new ModelAndView("index");
         }
     }
 
-    @GetMapping("/log-in-success.htm")
-    public ModelAndView redirectUser(HttpSession session, EventDao eventDao) {
-        if (session.getAttribute("user") != null) {
-            session.removeAttribute("eventList");
-            List<Event> eventList = eventDao.getEventList();
-            session.setAttribute("eventList", eventList);
-            return new ModelAndView("manage-events-view");
+    @GetMapping("/log-in-user.htm")
+    public ModelAndView redirectUser(HttpServletRequest request, HttpSession session, EventDao eventDao) {
+        User loggedInUser = (User) session.getAttribute("user");
+        if (loggedInUser != null) {
+            if (loggedInUser.getUser_type().equals("admin")) {
+                session.removeAttribute("eventList");
+                List<Event> eventList = eventDao.getEventList();
+                session.setAttribute("eventList", eventList);
+                return new ModelAndView("manage-events-view");
+            } else {
+                return new ModelAndView("customer-view");
+            }
         } else {
             return new ModelAndView("index");
         }
@@ -103,11 +121,11 @@ public class UserController implements Serializable {
 
     @PostMapping("/sign-out.htm")
     public ModelAndView signOutUser(HttpSession session) {
-        session.removeAttribute("user");
-        session.removeAttribute("event");
-        session.removeAttribute("eventList");
-        session.removeAttribute("venue");
-        session.removeAttribute("venueList");
+        Enumeration<String> attributes = session.getAttributeNames();
+        while (attributes.hasMoreElements()) {
+            String attribute = (String) attributes.nextElement();
+            session.removeAttribute(attribute);
+        }
         return new ModelAndView("index");
     }
 }

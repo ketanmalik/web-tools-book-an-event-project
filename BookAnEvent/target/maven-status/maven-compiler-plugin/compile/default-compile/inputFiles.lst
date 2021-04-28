@@ -2,10 +2,15 @@
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/controller/AdminShowController.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/dao/ShowDao.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/controller/NavbarController.java
+/Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/controller/CustomerViewController.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/controller/AdminEventController.java
+/Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/validator/BookingValidator.java
+/Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/pojo/Booking.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/pojo/Show.java
+/Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/dao/BookingDao.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/validator/VenueValidator.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/dao/UserDao.java
+/Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/controller/BookingController.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/pojo/User.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/dao/DAO.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/dao/EventDao.java
