@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<hibernate-mapping>
+    <class name="com.mycompany.pojo.Event" table="event">
+        <id name="event_id" type="int">
+            <generator class="native"/>
+        </id>
+        <property name="event_name" type="string" />
+        <property name="event_type" type="string" />
+        <property name="event_cast" type="string" />
+        <property name="event_rating" type="string" />
+        <property name="event_genre" type="string" />
+        <property name="event_language" type="string" />
+        <property name="event_summary" type="string" />
+        <property name="event_duration" type="string" />
+        <property name="event_date" type="java.util.Date" />
+    </class>
+</hibernate-mapping>
