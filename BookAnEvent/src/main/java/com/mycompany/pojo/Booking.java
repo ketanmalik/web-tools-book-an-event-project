@@ -5,6 +5,7 @@
  */
 package com.mycompany.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,7 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author ketanmalik
  */
-public class Booking {
+public class Booking implements Serializable{
 
     private int booking_id;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

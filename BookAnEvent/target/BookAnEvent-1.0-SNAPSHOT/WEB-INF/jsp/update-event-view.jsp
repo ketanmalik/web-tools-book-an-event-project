@@ -93,6 +93,7 @@
                                     <form:option value="Crime">Crime</form:option>
                                     <form:option value="Fantasy">Fantasy</form:option>
                                     <form:option value="Horror">Horror</form:option>
+                                    <form:option value="Live">Live</form:option>
                                     <form:option value="Mystery">Mystery</form:option>
                                     <form:option value="Romance">Romance</form:option>
                                     <form:option value="Sci-Fi">Sci-Fi</form:option>

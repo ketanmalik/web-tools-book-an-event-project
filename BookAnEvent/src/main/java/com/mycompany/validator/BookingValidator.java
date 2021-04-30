@@ -74,4 +74,5 @@ public class BookingValidator implements Validator {
             errors.rejectValue("price", "NotEmpty.bookingForm.price", "Please enter valid no. of seats to calculate price");
         }
     }
+
 }

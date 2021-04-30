@@ -6,7 +6,6 @@
 package com.mycompany.dao;
 
 import com.mycompany.pojo.User;
-import java.io.Serializable;
 import java.util.List;
 import org.hibernate.query.Query;
 
@@ -17,42 +16,71 @@ import org.hibernate.query.Query;
 public class UserDao extends DAO {
 
     public int addUser(String fName, String lName, String email, String password, String city, String state, String country, String user_type) {
-        List<User> userAlreadyExists = checkUser(email, "", "sign-up");
-        if (userAlreadyExists.isEmpty()) {
-            User user = new User();
-            user.setfName(fName);
-            user.setlName(lName);
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setCity(city);
-            user.setState(state);
-            user.setCountry(country);
-            user.setUser_type(user_type);
+        boolean userAlreadyExists = checkUser(email, "", "sign-up");
+        if (userAlreadyExists) {
+            return -1;
+        }
+        try {
+            User user = new User(fName, lName, email, password, city, state, country, user_type);
             beginTransaction();
-            Serializable res = getSession().save(user);
+            getSession().save(user);
             commit();
             return 1;
-        } else {
+        } catch (Exception e) {
             rollback();
+            System.out.println("Exception in addUser UserDao: ");
+            e.printStackTrace();
             return -1;
         }
     }
 
-    public List<User> checkUser(String email, String password, String mode) {
-        String hql = "";
+    public boolean checkUser(String email, String password, String mode) {
+        String hql;
         if (mode.equalsIgnoreCase("sign-up")) {
             hql = "FROM User where email=:email";
         } else {
             hql = "FROM User where email=:email and password =:password";
         }
-        Query query = getSession().createQuery(hql);
-        query.setParameter("email", email);
-        if (mode.equalsIgnoreCase("log-in")) {
-            query.setParameter("password", password);
+        try {
+            Query query = getSession().createQuery(hql);
+            query.setParameter("email", email);
+            if (mode.equalsIgnoreCase("log-in")) {
+                query.setParameter("password", password);
+            }
+            beginTransaction();
+            List users = query.list();
+            if (users.isEmpty()) {
+                rollback();
+                return false;
+            }
+            commit();
+            return true;
+        } catch (Exception e) {
+            rollback();
+            System.out.println("Exception in checkUser UserDao: ");
+            e.printStackTrace();
+            return false;
         }
-        beginTransaction();
-        List result = query.list();
-        commit();
-        return result;
+    }
+
+    public User getUser(String email) {
+        try {
+            String hql = "From User Where email = :email";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("email", email);
+            beginTransaction();
+            List<User> users = query.list();
+            if (users.isEmpty()) {
+                rollback();
+                return null;
+            }
+            commit();
+            return users.get(0);
+        } catch (Exception e) {
+            rollback();
+            System.out.println("Exception in getUser UserDao: ");
+            e.printStackTrace();
+            return null;
+        }
     }
 }

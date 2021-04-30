@@ -9,8 +9,6 @@ import com.mycompany.dao.EventDao;
 import com.mycompany.dao.ShowDao;
 import com.mycompany.pojo.Event;
 import com.mycompany.pojo.Show;
-import com.mycompany.utils.Util;
-import java.util.Enumeration;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

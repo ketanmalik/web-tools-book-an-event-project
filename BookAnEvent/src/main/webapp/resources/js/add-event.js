@@ -44,7 +44,7 @@ function validateAddEventForm() {
         return false;
     }
     if (event_summary && event_summary.length > 2000) {
-        alert("Event summary should not exceed 200 characters");
+        alert("Event summary should not exceed 2000 characters");
         return false;
     }
     if (!event_date || event_date === "") {

@@ -21,6 +21,7 @@ com/mycompany/controller/PdfController.class
 com/mycompany/controller/CustomerViewController.class
 com/mycompany/controller/BookingController.class
 com/mycompany/pojo/Show.class
+com/mycompany/controller/UserBookingsController.class
 com/mycompany/controller/NavbarController.class
 com/mycompany/view/PdfView.class
 com/mycompany/pojo/Event.class

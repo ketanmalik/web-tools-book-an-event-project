@@ -13,38 +13,22 @@
         <link href="webjars/bootstrap/4.6.0-1/css/bootstrap.min.css" rel="stylesheet">
         <link href="webjars/font-awesome/5.15.2/css/fontawesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css" type="text/css">
+        <script src="<%=request.getContextPath()%>/resources/js/Utils.js"></script>
         <title>BookAnEvent</title>
     </head>
     <body>
         <script type="text/javascript">
             function getEventNames()
             {
-                var xmlHttp;
-
-                try     // Firefox, Opera 8.0+, Safari
-                {
-                    xmlHttp = new XMLHttpRequest();
-                } catch (e)
-                {
-                    try  // Internet Explorer
-                    {
-                        xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
-                    } catch (e)
-                    {
-                        try
-                        {
-                            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-                        } catch (e)
-                        {
-                            alert("Your browser does not support AJAX!");
-                            return false;
-                        }
-                    }
+                var xmlHttp = getXmlHttpObj();
+                if(xmlHttp === null) {
+                    alert("Couldn't load events because your browser doesn't support Ajax!");
+                    return null;
                 }
 
                 xmlHttp.onreadystatechange = function ()
                 {
-                    if (xmlHttp.readyState == 4 & xmlHttp.status == 200)
+                    if (xmlHttp.readyState === 4 & xmlHttp.status === 200)
                     {
                         var eventsInCityArr = xmlHttp.responseText.split(",");
                         var selectElement = document.getElementById("eventsInCity");
@@ -54,11 +38,11 @@
                             selectElement.add(new Option(eventsInCityArr[i], eventsInCityArr[i]));
                         }
                         var cityError = document.getElementById("cityError");
-                        if(cityError !== null) {
+                        if (cityError !== null) {
                             cityError.style.display = 'none';
                         }
                         var eventError = document.getElementById("eventError");
-                        if(eventError !== null) {
+                        if (eventError !== null) {
                             eventError.style.display = 'none';
                         }
                     }
@@ -70,9 +54,13 @@
         </script>
         <nav class="navbar navbar-dark bg-dark">
             <a class="navbar-brand">BookAnEvent</a>
-            <form action="sign-out.htm" method="post">
-                <input class="btn btn-outline-warning my-2 my-sm-0" type="submit" value="Sign Out" /> 
-            </form>
+            <div style="display: flex;">
+                <a class="btn btn-outline-success my-2 my-sm-0" href="/BookAnEvent/user-bookings.htm">Manage Bookings</a>
+                &emsp;
+                <form action="sign-out.htm" method="post">
+                    <input class="btn btn-outline-warning my-2 my-sm-0" type="submit" value="Sign Out" /> 
+                </form>
+            </div>
         </nav>
         <div class="container">
             <h3 class="form-heading">Book An Event</h3>

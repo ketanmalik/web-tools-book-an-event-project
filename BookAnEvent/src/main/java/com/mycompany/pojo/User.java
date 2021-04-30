@@ -21,6 +21,22 @@ public class User {
     private String country;
     private String user_type;
 
+    public User() {
+    }
+
+    public User(String fName, String lName, String email, String password, String city, String state, String country, String user_type) {
+        this.fName = fName;
+        this.lName = lName;
+        this.email = email;
+        this.password = password;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.user_type = user_type;
+    }
+
+    
+    
     public int getUser_id() {
         return user_id;
     }

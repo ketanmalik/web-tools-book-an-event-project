@@ -19,9 +19,13 @@
     <body>
         <nav class="navbar navbar-dark bg-dark">
             <a class="navbar-brand">BookAnEvent</a>
-            <form action="sign-out.htm" method="post">
-                <input class="btn btn-outline-warning my-2 my-sm-0" type="submit" value="Sign Out" /> 
-            </form>
+            <div style="display: flex;">
+                <a class="btn btn-outline-success my-2 my-sm-0" href="/BookAnEvent/user-bookings.htm">Manage Bookings</a>
+                &emsp;
+                <form action="sign-out.htm" method="post">
+                    <input class="btn btn-outline-warning my-2 my-sm-0" type="submit" value="Sign Out" /> 
+                </form>
+            </div>
         </nav>
         <div class="container">
             <h3 class="form-heading">Book An Event</h3>
@@ -86,21 +90,21 @@
                                         <c:if test="${venue.venue_id == venueId}">
                                             <td>${venue.venue_name}</td>
                                             <c:set var="venue-id" scope="session" value="${venue.venue_id}" />
-                                            <input type="hidden" name="venue-id" value="${venue.venue_id}" />
-                                        </c:if>
-                                    </c:forEach>
-                                    <td><fmt:formatDate value="${show.show_date}" type="date" dateStyle = "long"/></td>
-                                    <td>${show.show_time}</td>
-                                    <td>$${show.seat_price}</td>
-                                    <td>${show.seats_left}</td>
-                                    <td>
-                                        <form action="step-3.htm" method="post">
-                                            <input type="submit" class="btn btn-outline-primary" value="Book" />
-                                            <input type="hidden" name="show-id" value="${show.show_id}" />
-                                        </form>
-                                    </td>
-                                </tr>
+                                    <input type="hidden" name="venue-id" value="${venue.venue_id}" />
+                                </c:if>
                             </c:forEach>
+                            <td><fmt:formatDate value="${show.show_date}" type="date" dateStyle = "long"/></td>
+                            <td>${show.show_time}</td>
+                            <td>$${show.seat_price}</td>
+                            <td>${show.seats_left}</td>
+                            <td>
+                                <form action="step-3.htm" method="post">
+                                    <input type="submit" class="btn btn-outline-primary" value="Book" />
+                                    <input type="hidden" name="show-id" value="${show.show_id}" />
+                                </form>
+                            </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>

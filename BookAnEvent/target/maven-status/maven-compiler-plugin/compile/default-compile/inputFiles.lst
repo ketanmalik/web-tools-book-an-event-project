@@ -18,6 +18,7 @@
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/controller/NavbarController.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/pojo/Show.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/dao/BookingDao.java
+/Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/controller/UserBookingsController.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/controller/PdfController.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/view/BookingView.java
 /Users/ketanmalik/NetBeansProjects/BookAnEvent/src/main/java/com/mycompany/pojo/Venue.java

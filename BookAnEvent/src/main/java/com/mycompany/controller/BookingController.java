@@ -24,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,7 +82,11 @@ public class BookingController {
             return new ModelAndView("customer-details-view");
         }
         Show selectedShow = (Show) session.getAttribute("selectedShow");
-        bookingValidator.validateCustom(result, booking, selectedShow);
+        Show mostRecentShow = showDao.getShowObj(selectedShow.getShow_id());
+        if (mostRecentShow.getSeats_left() == 0) {
+            return seatsExhausted(request, bookingDao, booking);
+        }
+        bookingValidator.validateCustom(result, booking, mostRecentShow);
         if (result.hasErrors()) {
             return new ModelAndView("customer-details-view");
         }
@@ -101,9 +104,7 @@ public class BookingController {
                 Show updatedShow = showDao.updateSeatsLeft(selectedShow.getShow_id(), seats);
                 if (updatedShow == null) {
                     bookingDao.deleteBooking(savedBooking.getBooking_id());
-                    request.setAttribute("errorMsg1", "Your booking could not be confirmed");
-                    request.setAttribute("errorMsg2", "The show you selected ran out of seats. Please select a different show to book.");
-                    return new ModelAndView("error-view");
+                    return seatsExhausted(request, bookingDao, savedBooking);
                 }
                 saveBookingPdf(session, savedBooking, venue, selectedShow);
                 return new ModelAndView("customer-confirm-view");
@@ -149,7 +150,7 @@ public class BookingController {
         removeTempSessionAttributes(session);
         session.setAttribute("bookingPdf", bookingPdf);
     }
-    
+
     private void removeTempSessionAttributes(HttpSession session) {
         session.removeAttribute("selectedCity");
         session.removeAttribute("requestedShows");
@@ -158,5 +159,11 @@ public class BookingController {
         session.removeAttribute("selectedShow");
         session.removeAttribute("selectedEvent");
         session.removeAttribute("eventsInCity");
+    }
+
+    private ModelAndView seatsExhausted(HttpServletRequest request, BookingDao bookingDao, Booking savedBooking) {
+        request.setAttribute("errorMsg1", "Your booking could not be confirmed");
+        request.setAttribute("errorMsg2", "The show you selected ran out of seats. Please select a different show to book.");
+        return new ModelAndView("error-view");
     }
 }

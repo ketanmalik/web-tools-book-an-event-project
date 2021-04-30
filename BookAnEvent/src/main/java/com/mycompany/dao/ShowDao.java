@@ -89,7 +89,7 @@ public class ShowDao extends DAO {
                 return null;
             }
 
-            String shows_hql = "FROM Show WHERE event_id = :event_id AND venue_id IN (:venue_ids)";
+            String shows_hql = "FROM Show WHERE event.event_id = :event_id AND venue.venue_id IN (:venue_ids)";
             Query shows_query = getSession().createQuery(shows_hql);
             shows_query.setParameter("event_id", event_id);
             shows_query.setParameterList("venue_ids", venue_id_list);
@@ -101,6 +101,7 @@ public class ShowDao extends DAO {
             commit();
             return shows;
         } catch (Exception e) {
+            rollback();
             System.out.println("Exception in getShowList Dao: ");
             e.printStackTrace();
             return null;
@@ -135,7 +136,6 @@ public class ShowDao extends DAO {
             query.setParameter("show_id", show_id);
             beginTransaction();
             List<Show> shows = query.list();
-            commit();
             if (shows.isEmpty()) {
                 rollback();
                 return null;
@@ -150,7 +150,6 @@ public class ShowDao extends DAO {
             query = getSession().createQuery(hql);
             query.setParameter("seats_left", seats_left);
             query.setParameter("show_id", show_id);
-            beginTransaction();
             query.executeUpdate();
             commit();
             show_to_update.setSeats_left(seats_left);
@@ -160,6 +159,27 @@ public class ShowDao extends DAO {
             System.out.println("Exception in updateSeatsLeft ShowDao: ");
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void addSeats(int show_id, int seatsToAdd) {
+        try {
+            String hql = "FROM Show WHERE show_id = :show_id";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("show_id", show_id);
+            beginTransaction();
+            List<Show> shows = query.list();
+            if (shows.isEmpty()) {
+                rollback();
+            }
+            Show show = shows.get(0);
+            show.setSeats_left(show.getSeats_left() + seatsToAdd);
+            getSession().update(show);
+            commit();
+        } catch (Exception e) {
+            rollback();
+            System.out.println("Exception in getShowList Dao: ");
+            e.printStackTrace();
         }
     }
 }

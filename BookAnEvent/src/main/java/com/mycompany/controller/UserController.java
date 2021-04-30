@@ -5,6 +5,7 @@
  */
 package com.mycompany.controller;
 
+import com.mycompany.dao.BookingDao;
 import com.mycompany.dao.EventDao;
 import com.mycompany.dao.ShowDao;
 import com.mycompany.dao.UserDao;
@@ -24,6 +25,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -67,38 +70,32 @@ public class UserController implements Serializable {
     }
 
     @PostMapping("/log-in-user.htm")
-    public ModelAndView logInUser(HttpServletRequest request, HttpServletResponse response, UserDao userDao, HttpSession session, EventDao eventDao, VenueDao venueDao, ShowDao showDao) {
+    public ModelAndView logInUser(HttpServletRequest request, HttpServletResponse response, UserDao userDao, HttpSession session, EventDao eventDao, VenueDao venueDao, ShowDao showDao, BookingDao bookingDao) {
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        if (email.trim().equals("") || password.trim().equals("")) {
+        User user = userDao.getUser(email);
+        if (user == null) {
             request.setAttribute("errorMsg1", "You could not be logged in.");
-            request.setAttribute("errorMsg2", "Either email or password is blank. Please enter valid user credentials and try again.");
-            return new ModelAndView("error-view");
-        }
-        List<User> user = userDao.checkUser(email, password, "log-in");
-        if (user.isEmpty()) {
-            request.setAttribute("errorMsg1", "You could not be logged in.");
-            request.setAttribute("errorMsg2", "Either email or password is incorrect. Please enter valid user credentials and try again.");
+            request.setAttribute("errorMsg2", "Either your browser doesn't allow Javascript or our network is not responding.");
             if (session.getAttribute("user") != null) {
                 session.removeAttribute("user");
             };
             return new ModelAndView("error-view");
-        } else {
-            List<Event> eventList = eventDao.getEventList();
-            List<Venue> venueList = venueDao.getVenueList();
-            List<Show> showList = showDao.getShowList();
-            session.setAttribute("user", user.get(0));
-            session.setAttribute("eventList", eventList);
-            session.setAttribute("venueList", venueList);
-            session.setAttribute("showList", showList);
+        }
 
-            if (user.get(0).getUser_type().equals("admin")) {
-                return new ModelAndView("manage-events-view");
-            } else {
-                List<String> venueCityList = venueDao.getUniqueVenueCityList();
-                session.setAttribute("venueCityList", venueCityList);
-                return new ModelAndView("customer-view");
-            }
+        List<Event> eventList = eventDao.getEventList();
+        List<Venue> venueList = venueDao.getVenueList();
+        List<Show> showList = showDao.getShowList();
+        session.setAttribute("user", user);
+        session.setAttribute("eventList", eventList);
+        session.setAttribute("venueList", venueList);
+        session.setAttribute("showList", showList);
+
+        if (user.getUser_type().equals("admin")) {
+            return new ModelAndView("manage-events-view");
+        } else {
+            List<String> venueCityList = venueDao.getUniqueVenueCityList();
+            session.setAttribute("venueCityList", venueCityList);
+            return new ModelAndView("customer-view");
         }
     }
 
@@ -127,5 +124,21 @@ public class UserController implements Serializable {
             session.removeAttribute(attribute);
         }
         return new ModelAndView("index");
+    }
+
+    @PostMapping("/validate-user.htm")
+    @ResponseBody
+    public String validateUser(HttpServletRequest request, HttpServletResponse response, HttpSession session, UserDao userDao) {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        if (email.trim().equals("") || password.trim().equals("")) {
+            return "invalidUser";
+        }
+        boolean validUser = userDao.checkUser(email, password, "log-in");
+        if (validUser) {
+            return "validUser";
+        }
+        return "invalidUser";
     }
 }

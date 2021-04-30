@@ -11,6 +11,7 @@ import com.mycompany.pojo.Show;
 import com.mycompany.pojo.User;
 import com.mycompany.pojo.Venue;
 import java.util.Date;
+import java.util.List;
 import org.hibernate.query.Query;
 
 /**
@@ -47,6 +48,49 @@ public class BookingDao extends DAO {
             rollback();
             System.out.println("Exception in deleteBooking BookingDAO: ");
             e.printStackTrace();
+        }
+    }
+
+    public List<Booking> getBookings(int user_id) {
+        try {
+            String hql = "FROM Booking WHERE user.user_id = :user_id";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("user_id", user_id);
+            beginTransaction();
+            List<Booking> bookings = query.list();
+            if (bookings.isEmpty()) {
+                rollback();
+                return null;
+            }
+            commit();
+            return bookings;
+        } catch (Exception e) {
+            rollback();
+            System.out.println("Exception in getBookings BookingDAO: ");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Booking getBooking(int booking_id) {
+        try {
+            String hql = "FROM Booking WHERE booking_id = :booking_id";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("booking_id", booking_id);
+            beginTransaction();
+            List<Booking> bookings = query.list();
+            if (bookings.isEmpty()) {
+                rollback();
+                return null;
+            }
+            commit();
+            System.out.println("committed2");
+            return bookings.get(0);
+        } catch (Exception e) {
+            rollback();
+            System.out.println("Exception in getBooking BookingDAO: ");
+            e.printStackTrace();
+            return null;
         }
     }
 }

@@ -29,9 +29,13 @@
         </script>
         <nav class="navbar navbar-dark bg-dark">
             <a class="navbar-brand">BookAnEvent</a>
-            <form action="sign-out.htm" method="post">
-                <input class="btn btn-outline-warning my-2 my-sm-0" type="submit" value="Sign Out" /> 
-            </form>
+            <div style="display: flex;">
+                <a class="btn btn-outline-success my-2 my-sm-0" href="/BookAnEvent/user-bookings.htm">Manage Bookings</a>
+                &emsp;
+                <form action="sign-out.htm" method="post">
+                    <input class="btn btn-outline-warning my-2 my-sm-0" type="submit" value="Sign Out" /> 
+                </form>
+            </div>
         </nav>
         <div class="container">
             <input type="hidden" value="${sessionScope.selectedShow.seat_price}" id="seat-price" />

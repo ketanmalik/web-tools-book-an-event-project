@@ -18,7 +18,7 @@ and open the template in the editor.
         <property name="show_time" type="string" not-null="true" />
         <property name="screen" type="string" not-null="true" />
         <property name="seats_left" type="int" not-null="true" />
-        <many-to-one name="event" class="com.mycompany.pojo.Event" column="event_id" not-null="true" foreign-key="fk_event" cascade="all" />
-        <many-to-one name="venue" class="com.mycompany.pojo.Venue" column="venue_id" not-null="true" foreign-key="fk_venue" cascade="all" /> 
+        <many-to-one name="event" class="com.mycompany.pojo.Event" column="event_id" not-null="true" foreign-key="fk_event" cascade="all"  lazy="false" />
+        <many-to-one name="venue" class="com.mycompany.pojo.Venue" column="venue_id" not-null="true" foreign-key="fk_venue" cascade="all" lazy="false" /> 
     </class>
 </hibernate-mapping>

@@ -76,9 +76,9 @@ public class AdminEventController {
         String event_summary = request.getParameter("event-summary");
         String event_duration = request.getParameter("event-duration");
         String event_date = request.getParameter("event-date");
-
+        
         if (event_name.trim().equals("") || event_type.trim().equals("") || event_cast.trim().equals("") || event_rating.trim().equals("") || event_genre.trim().equals("")
-                || event_language.trim().equals("") || event_summary.trim().equals("") || event_duration.trim().equals("") || event_date.trim().equals("")) {
+                || event_language.trim().equals("") || event_summary.trim().equals("") || event_summary.length() > 2000 || event_duration.trim().equals("") || event_date.trim().equals("")) {
 
             request.setAttribute("errorMsg1", "New event could not be added.");
             request.setAttribute("errorMsg2", "Some of the fields you entered were invalid. Please try again.");
